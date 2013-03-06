@@ -59,22 +59,24 @@ end
 def upload_to_facebook
 	if @is_dir
 		album_name = construct_album_name(dir_path)
-		# fbcmd ADDPICD c:\photos\jamaica 1		
-		system("fbcmd ADDPICD \"#{dir_path}\" ")	
+		
+		# create the album alone
+		# fbcmd ADDALBUM "Jamaica 2009" "My Trip To Jamaica" "Jamaica" "friends-of-friends"
+		# puts "album name so far is #{album_name} "
+		system("fbcmd ADDALBUM \"#{album_name}\"")
 
-		# Doing it the manual way
-				# create the album alone
-				# fbcmd ADDALBUM "Jamaica 2009" "My Trip To Jamaica" "Jamaica" "friends-of-friends"
-				# puts "album name so far is #{album_name} "
-				system("fbcmd ADDALBUM \"#{album_name}\"")
-				# iterate through all files
-				Dir.glob(dir_path + "/*").sort.each do |f|
-			    filename = File.basename(f)
-			    # File.rename(f, filename.capitalize + File.extname(f))
-					# fbcmd ADDPIC myfile.jpg latest "This is me at the airport"
-			    # puts "file name is #{dir_path}\\#{filename}"
-			    puts "#{filename} didn't upload sucessfully" unless system( "fbcmd ADDPIC \"#{dir_path}/#{filename}\" latest" )
-				end
+		# fbcmd ADDPICD c:\photos\jamaica 1		
+		system("fbcmd ADDPICD \"#{dir_path}\" latest")	
+
+		# # Doing it the manual way
+		# 		# iterate through all files
+		# 		Dir.glob(dir_path + "/*").sort.each do |f|
+		# 	    filename = File.basename(f)
+		# 	    # File.rename(f, filename.capitalize + File.extname(f))
+		# 			# fbcmd ADDPIC myfile.jpg latest "This is me at the airport"
+		# 	    # puts "file name is #{dir_path}\\#{filename}"
+		# 	    puts "#{filename} didn't upload sucessfully" unless system( "fbcmd ADDPIC \"#{dir_path}/#{filename}\" latest" )
+		# 		end
 	else
 		puts "sorry can't upload single facebook photos at the moment."
 	end
