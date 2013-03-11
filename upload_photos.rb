@@ -35,12 +35,12 @@ end
 # [google command line interface](http://code.google.com/p/googlecl/wiki/Manual)
 def upload_to_picasa(dir_path)
 	puts "Picasa is free for images that are 2048 sized images"
-	print "Shall I reduce all pics to 2048 (note that these will permanently downsize image resolution). Enter \"yes\"?"
+	print "Shall I reduce all pics to 2048 (note that these will permanently downsize image resolution). Enter \"yes\" or \"exit\" ?"
 	img_downsize_choice = STDIN.gets.chomp()
+	exit if img_downsize_choice == "exit"
 
 	if @is_dir
-		system("sips -Z 2048 \"#{dir_path}\"/") if img_downsize_choice == "yes"
-		
+		system("sips -Z 2048 \"#{dir_path}\"/*") if img_downsize_choice == "yes"
 		album_name = construct_album_name(dir_path)
 		# puts "command is "+"google picasa create --title \"#{album_name}\" \"#{dir_path}\"/*"
 		system("google picasa create --title \"#{album_name}\" \"#{dir_path}\"/*")
@@ -56,7 +56,7 @@ def upload_to_picasa(dir_path)
 end
 
 # facebook command line usage [fbcmd](http://fbcmd.dtompkins.com/commands)
-def upload_to_facebook
+def upload_to_facebook(dir_path)
 	if @is_dir
 		album_name = construct_album_name(dir_path)
 		
